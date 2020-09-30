@@ -164,4 +164,38 @@ public class Grid {
         }
     }
 
+    public void moveDown() {
+        // TODO: Optimize this
+        for (int i = 0; i < this.size * this.size; i++) {
+            for (int y = 0; y < this.size; y++) {
+                for (int x = 0; x < this.size; x++) {
+                    Tile tile = getTileAt(x, y);
+                    Tile sideTile = getTileAt(x, y + 1);
+
+                    if (tile.getPosY() < this.size - 1 && tile.isTaken()) {
+                        if (!sideTile.isTaken()) {
+                            this.tiles.remove(tile);
+                            this.tiles.remove(sideTile);
+
+                            Tile newSideTile = new Tile(x, y + 1, tile.getValue());
+                            Tile newTile = new Tile(x, y, -1);
+
+                            this.tiles.add(newSideTile);
+                            this.tiles.add(newTile);
+                        } else if (sideTile.getValue() == tile.getValue()) {
+                            this.tiles.remove(tile);
+                            this.tiles.remove(sideTile);
+
+                            Tile newSideTile = new Tile(x, y + 1, tile.getValue() * 2);
+                            Tile newTile = new Tile(x, y, -1);
+
+                            this.tiles.add(newSideTile);
+                            this.tiles.add(newTile);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 }

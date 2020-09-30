@@ -33,9 +33,11 @@ public class GameController {
                     grid.generateTile();
                     break;
                 case 'w':
+                    grid.moveUp();
                     grid.generateTile();
                     break;
                 case 's':
+                    grid.moveDown();
                     grid.generateTile();
                     break;
                 case 'q':
