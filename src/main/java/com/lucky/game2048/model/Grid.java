@@ -2,7 +2,6 @@ package com.lucky.game2048.model;
 
 import com.lucky.game2048.util.NumberUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Grid {
@@ -14,6 +13,22 @@ public class Grid {
         this.size = size;
         this.tiles = tiles;
         generateGrid();
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public List<Tile> getTiles() {
+        return tiles;
+    }
+
+    public void setTiles(List<Tile> tiles) {
+        this.tiles = tiles;
     }
 
     private void generateGrid() {
@@ -62,7 +77,9 @@ public class Grid {
         return null;
     }
 
-    public void moveLeft() {
+    public boolean moveLeft() {
+        boolean actionMade = false;
+
         // TODO: Optimize this
         for (int i = 0; i < this.size * this.size; i++) {
             for (int y = 0; y < this.size; y++) {
@@ -71,6 +88,8 @@ public class Grid {
                     Tile sideTile = getTileAt(x - 1, y);
 
                     if (tile.getPosX() > 0 && tile.isTaken()) {
+                        actionMade = true;
+
                         if (!sideTile.isTaken()) {
                             this.tiles.remove(tile);
                             this.tiles.remove(sideTile);
@@ -94,9 +113,12 @@ public class Grid {
                 }
             }
         }
+        return actionMade;
     }
 
-    public void moveRight() {
+    public boolean moveRight() {
+        boolean actionMade = false;
+
         // TODO: Optimize this
         for (int i = 0; i < this.size * this.size; i++) {
             for (int y = 0; y < this.size; y++) {
@@ -105,6 +127,8 @@ public class Grid {
                     Tile sideTile = getTileAt(x + 1, y);
 
                     if (tile.getPosX() < this.size - 1 && tile.isTaken()) {
+                        actionMade = true;
+
                         if (!sideTile.isTaken()) {
                             this.tiles.remove(tile);
                             this.tiles.remove(sideTile);
@@ -128,9 +152,12 @@ public class Grid {
                 }
             }
         }
+        return actionMade;
     }
 
-    public void moveUp() {
+    public boolean moveUp() {
+        boolean actionMade = false;
+
         // TODO: Optimize this
         for (int i = 0; i < this.size * this.size; i++) {
             for (int y = 0; y < this.size; y++) {
@@ -139,6 +166,8 @@ public class Grid {
                     Tile sideTile = getTileAt(x, y - 1);
 
                     if (tile.getPosY() > 0 && tile.isTaken()) {
+                        actionMade = true;
+
                         if (!sideTile.isTaken()) {
                             this.tiles.remove(tile);
                             this.tiles.remove(sideTile);
@@ -162,9 +191,12 @@ public class Grid {
                 }
             }
         }
+        return actionMade;
     }
 
-    public void moveDown() {
+    public boolean moveDown() {
+        boolean actionMade = false;
+
         // TODO: Optimize this
         for (int i = 0; i < this.size * this.size; i++) {
             for (int y = 0; y < this.size; y++) {
@@ -173,6 +205,8 @@ public class Grid {
                     Tile sideTile = getTileAt(x, y + 1);
 
                     if (tile.getPosY() < this.size - 1 && tile.isTaken()) {
+                        actionMade = true;
+
                         if (!sideTile.isTaken()) {
                             this.tiles.remove(tile);
                             this.tiles.remove(sideTile);
@@ -196,6 +230,7 @@ public class Grid {
                 }
             }
         }
+        return actionMade;
     }
 
 }
