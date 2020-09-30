@@ -1,5 +1,7 @@
 package com.lucky.game2048.model;
 
+import com.lucky.game2048.util.NumberUtil;
+
 public class Tile {
 
     private int posX;
@@ -42,14 +44,6 @@ public class Tile {
 
     public boolean isTaken() {
         return this.value > 0 && this.value <= 2048;
-    }
-
-    public boolean moveLeft() {
-        if (this.isTaken() && this.posX - 1 > 0) {
-            this.posX--;
-            return true;
-        }
-        return false;
     }
 
 }

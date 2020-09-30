@@ -39,19 +39,6 @@ public class Grid {
         }
     }
 
-    public void draw() {
-        String format = "%5s";
-        System.out.println("----------------------");
-        for (int y = 0; y < this.size; y++) {
-            System.out.print("|");
-            for (int x = 0; x < this.size; x++) {
-                System.out.printf(format, getTileAt(x, y).getTileGridValue());
-            }
-            System.out.print("|\n");
-        }
-        System.out.println("----------------------");
-    }
-
     public void generateTile() {
         int tileValue = NumberUtil.generateRandomTileNumber();
         int tilePosX = NumberUtil.generateRandomNumber(0, this.size);
@@ -68,7 +55,7 @@ public class Grid {
         }
     }
 
-    private Tile getTileAt(int x, int y) {
+    public Tile getTileAt(int x, int y) {
         for (Tile tile : this.tiles) {
             if (tile.getPosX() == x && tile.getPosY() == y) {
                 return tile;

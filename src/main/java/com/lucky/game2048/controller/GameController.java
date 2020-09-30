@@ -2,6 +2,7 @@ package com.lucky.game2048.controller;
 
 import com.lucky.game2048.model.GameState;
 import com.lucky.game2048.model.Grid;
+import com.lucky.game2048.service.RenderingService;
 
 import java.io.IOException;
 
@@ -17,7 +18,7 @@ public class GameController {
             System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
             System.out.println("-------- 2048 --------");
 
-            grid.draw();
+            RenderingService.renderGrid(grid);
 
             System.out.println("Use w, a, s, d keys to move the tiles.");
             System.out.println("Enter q to quit the game.");
@@ -27,10 +28,12 @@ public class GameController {
             if (GameState.isGameOver(grid))
                 break;
         }
-        if (GameState.GAME_WON)
+        if (GameState.GAME_WON) {
             System.out.println("Congratulations! You have won the game!");
-        else
+        } else {
             System.out.println("Too bad, you have lost the game! Play again and beat it next time!");
+        }
+        System.out.println("Your result is " + GameState.RESULT);
     }
 
     public void processAction(Grid grid) {
@@ -61,7 +64,6 @@ public class GameController {
             System.out.println("Printing stack trace:");
             e.printStackTrace();
         }
-
     }
 
 }
