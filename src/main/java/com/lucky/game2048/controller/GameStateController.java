@@ -46,6 +46,10 @@ public class GameStateController {
     }
 
     private boolean isGameLost(Grid grid) {
+        /*
+        TODO: Fix game lost condition.
+        Game is lost when user can no longer do any moves, not when all tiles are occupied
+         */
         int occupiedTiles = 0;
         for (Tile tile : grid.getTiles()) {
             occupiedTiles += tile.getValue() > 0 ? 1 : 0;

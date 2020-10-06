@@ -1,5 +1,6 @@
 package com.lucky.game2048.service;
 
+import com.lucky.game2048.controller.GridController;
 import com.lucky.game2048.model.Grid;
 
 /**
@@ -8,21 +9,22 @@ import com.lucky.game2048.model.Grid;
 public class InputService {
 
     public void processInput(int input, Grid grid) {
+        GridController gridController = new GridController();
         switch (input) {
             case 'a':
-                if (grid.moveLeft())
+                if (gridController.moveLeft(grid))
                     grid.generateTile();
                 break;
             case 'd':
-                if (grid.moveRight())
+                if (gridController.moveRight(grid))
                     grid.generateTile();
                 break;
             case 'w':
-                if (grid.moveUp())
+                if (gridController.moveUp(grid))
                     grid.generateTile();
                 break;
             case 's':
-                if (grid.moveDown())
+                if (gridController.moveDown(grid))
                     grid.generateTile();
                 break;
             case 'q':
