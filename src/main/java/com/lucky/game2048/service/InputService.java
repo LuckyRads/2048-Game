@@ -2,6 +2,9 @@ package com.lucky.game2048.service;
 
 import com.lucky.game2048.model.Grid;
 
+/**
+ * This class is responsible for processing user input.
+ */
 public class InputService {
 
     public void processInput(int input, Grid grid) {
