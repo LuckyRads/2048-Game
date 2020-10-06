@@ -2,28 +2,32 @@ package com.lucky.game2048.model;
 
 import com.lucky.game2048.util.NumberUtil;
 
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * This class is responsible for all operations associated with the game grid.
  */
-public class Grid {
+public class Grid extends JPanel {
 
-    private int size;
+    private int gridSize;
     private List<Tile> tiles;
 
-    public Grid(int size, List<Tile> tiles) {
-        this.size = size;
+    public Grid(int gridSize, List<Tile> tiles) {
+        this.gridSize = gridSize;
         this.tiles = tiles;
         generateGrid();
+        setLayout(new GridLayout(gridSize, gridSize, 5, 5));
     }
 
-    public int getSize() {
-        return size;
+    public int getGridSize() {
+        return gridSize;
     }
 
-    public void setSize(int size) {
-        this.size = size;
+    public void setGridSize(int size) {
+        this.gridSize = size;
     }
 
     public List<Tile> getTiles() {
@@ -35,8 +39,8 @@ public class Grid {
     }
 
     private void generateGrid() {
-        for (int y = 0; y < this.size; y++) {
-            for (int x = 0; x < this.size; x++) {
+        for (int y = 0; y < this.gridSize; y++) {
+            for (int x = 0; x < this.gridSize; x++) {
                 this.tiles.add(new Tile(x, y, -1));
             }
         }
@@ -44,8 +48,8 @@ public class Grid {
 
     public void generateTile() {
         int tileValue = NumberUtil.generateRandomTileNumber();
-        int tilePosX = NumberUtil.generateRandomNumber(0, this.size);
-        int tilePosY = NumberUtil.generateRandomNumber(0, this.size);
+        int tilePosX = NumberUtil.generateRandomNumber(0, this.gridSize);
+        int tilePosY = NumberUtil.generateRandomNumber(0, this.gridSize);
 
         while (true) {
             if (!getTileAt(tilePosX, tilePosY).isTaken()) {
@@ -53,8 +57,8 @@ public class Grid {
                 this.tiles.add(new Tile(tilePosX, tilePosY, tileValue));
                 return;
             }
-            tilePosX = NumberUtil.generateRandomNumber(0, this.size);
-            tilePosY = NumberUtil.generateRandomNumber(0, this.size);
+            tilePosX = NumberUtil.generateRandomNumber(0, this.gridSize);
+            tilePosY = NumberUtil.generateRandomNumber(0, this.gridSize);
         }
     }
 
@@ -70,8 +74,8 @@ public class Grid {
     public boolean moveLeft() {
         boolean actionMade = false;
 
-        for (int y = 0; y < this.size; y++) {
-            for (int x = 1; x < this.size; x++) {
+        for (int y = 0; y < this.gridSize; y++) {
+            for (int x = 1; x < this.gridSize; x++) {
                 Tile tile = getTileAt(x, y);
                 Tile sideTile = getTileAt(x - 1, y);
 
@@ -117,12 +121,12 @@ public class Grid {
     public boolean moveRight() {
         boolean actionMade = false;
 
-        for (int y = 0; y < this.size; y++) {
-            for (int x = this.size - 2; x >= 0; x--) {
+        for (int y = 0; y < this.gridSize; y++) {
+            for (int x = this.gridSize - 2; x >= 0; x--) {
                 Tile tile = getTileAt(x, y);
                 Tile sideTile = getTileAt(x + 1, y);
 
-                while (tile != null && sideTile != null && tile.getPosX() < this.size - 1 && tile.isTaken()) {
+                while (tile != null && sideTile != null && tile.getPosX() < this.gridSize - 1 && tile.isTaken()) {
                     if (!sideTile.isTaken()) {
                         this.tiles.remove(tile);
                         this.tiles.remove(sideTile);
@@ -164,8 +168,8 @@ public class Grid {
     public boolean moveUp() {
         boolean actionMade = false;
 
-        for (int x = 0; x < this.size; x++) {
-            for (int y = 1; y < this.size; y++) {
+        for (int x = 0; x < this.gridSize; x++) {
+            for (int y = 1; y < this.gridSize; y++) {
                 Tile tile = getTileAt(x, y);
                 Tile sideTile = getTileAt(x, y - 1);
 
@@ -211,12 +215,12 @@ public class Grid {
     public boolean moveDown() {
         boolean actionMade = false;
 
-        for (int x = 0; x < this.size; x++) {
-            for (int y = this.size - 2; y >= 0; y--) {
+        for (int x = 0; x < this.gridSize; x++) {
+            for (int y = this.gridSize - 2; y >= 0; y--) {
                 Tile tile = getTileAt(x, y);
                 Tile sideTile = getTileAt(x, y + 1);
 
-                while (tile != null && sideTile != null && tile.getPosY() < this.size - 1 && tile.isTaken()) {
+                while (tile != null && sideTile != null && tile.getPosY() < this.gridSize - 1 && tile.isTaken()) {
                     if (!sideTile.isTaken()) {
                         this.tiles.remove(tile);
                         this.tiles.remove(sideTile);

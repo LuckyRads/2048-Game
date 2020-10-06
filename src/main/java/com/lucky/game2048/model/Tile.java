@@ -1,15 +1,29 @@
 package com.lucky.game2048.model;
 
-public class Tile {
+import javax.swing.*;
+import java.awt.*;
+import java.util.HashMap;
+
+public class Tile extends JLabel {
 
     private int posX;
     private int posY;
     private int value;
+    private HashMap<Integer, Color> colorMap = new HashMap<Integer, Color>();
 
     public Tile(int posX, int posY, int value) {
         this.posX = posX;
         this.posY = posY;
         this.value = value;
+
+        this.setOpaque(true);
+        this.setText(getTileGridValue());
+        this.setFont(this.getFont().deriveFont(50f));
+
+        colorMap.put(-1, Color.PINK);
+        colorMap.put(2, Color.GREEN);
+        colorMap.put(4, Color.CYAN);
+        this.setBackground(colorMap.get(this.value));
     }
 
     public int getPosX() {

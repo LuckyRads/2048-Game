@@ -2,6 +2,9 @@ package com.lucky.game2048.util;
 
 import java.util.Random;
 
+/**
+ * This class has some useful utilities for working with numbers.
+ */
 public class NumberUtil {
 
     public static int generateRandomNumber(int min, int max) {

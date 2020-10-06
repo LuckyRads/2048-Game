@@ -6,6 +6,9 @@ import com.lucky.game2048.model.Tile;
 
 import java.util.ArrayList;
 
+/**
+ * Default main class for console game version.
+ */
 public class Main {
 
     public static void main(String[] args) {
