@@ -4,6 +4,9 @@ import com.lucky.game2048.util.NumberUtil;
 
 import java.util.List;
 
+/**
+ * This class is responsible for all operations associated with the game grid.
+ */
 public class Grid {
 
     private int size;
@@ -67,35 +70,43 @@ public class Grid {
     public boolean moveLeft() {
         boolean actionMade = false;
 
-        // TODO: Optimize this
-        for (int i = 0; i < this.size * this.size; i++) {
-            for (int y = 0; y < this.size; y++) {
-                for (int x = 0; x < this.size; x++) {
-                    Tile tile = getTileAt(x, y);
-                    Tile sideTile = getTileAt(x - 1, y);
+        for (int y = 0; y < this.size; y++) {
+            for (int x = 1; x < this.size; x++) {
+                Tile tile = getTileAt(x, y);
+                Tile sideTile = getTileAt(x - 1, y);
 
-                    if (tile.getPosX() > 0 && tile.isTaken()) {
+                while (tile != null && sideTile != null && tile.getPosX() > 0 && tile.isTaken()) {
+                    if (!sideTile.isTaken()) {
+                        this.tiles.remove(tile);
+                        this.tiles.remove(sideTile);
+
+                        Tile newSideTile = new Tile(tile.getPosX() - 1, y, tile.getValue());
+                        Tile newTile = new Tile(tile.getPosX(), y, -1);
+
+                        this.tiles.add(newSideTile);
+                        this.tiles.add(newTile);
+
+                        tile = getTileAt(newSideTile.getPosX(), y);
+                        sideTile = getTileAt(newSideTile.getPosX() - 1, y);
+
                         actionMade = true;
+                    } else if (sideTile.getValue() == tile.getValue()) {
+                        this.tiles.remove(tile);
+                        this.tiles.remove(sideTile);
 
-                        if (!sideTile.isTaken()) {
-                            this.tiles.remove(tile);
-                            this.tiles.remove(sideTile);
+                        Tile newSideTile = new Tile(tile.getPosX() - 1, y, tile.getValue() * 2);
+                        Tile newTile = new Tile(tile.getPosX(), y, -1);
 
-                            Tile newSideTile = new Tile(x - 1, y, tile.getValue());
-                            Tile newTile = new Tile(x, y, -1);
+                        this.tiles.add(newSideTile);
+                        this.tiles.add(newTile);
 
-                            this.tiles.add(newSideTile);
-                            this.tiles.add(newTile);
-                        } else if (sideTile.getValue() == tile.getValue()) {
-                            this.tiles.remove(tile);
-                            this.tiles.remove(sideTile);
+                        tile = getTileAt(newSideTile.getPosX(), y);
+                        sideTile = getTileAt(newSideTile.getPosX() - 1, y);
 
-                            Tile newSideTile = new Tile(x - 1, y, tile.getValue() * 2);
-                            Tile newTile = new Tile(x, y, -1);
-
-                            this.tiles.add(newSideTile);
-                            this.tiles.add(newTile);
-                        }
+                        actionMade = true;
+                        break;
+                    } else {
+                        break;
                     }
                 }
             }
@@ -106,35 +117,43 @@ public class Grid {
     public boolean moveRight() {
         boolean actionMade = false;
 
-        // TODO: Optimize this
-        for (int i = 0; i < this.size * this.size; i++) {
-            for (int y = 0; y < this.size; y++) {
-                for (int x = 0; x < this.size; x++) {
-                    Tile tile = getTileAt(x, y);
-                    Tile sideTile = getTileAt(x + 1, y);
+        for (int y = 0; y < this.size; y++) {
+            for (int x = this.size - 2; x >= 0; x--) {
+                Tile tile = getTileAt(x, y);
+                Tile sideTile = getTileAt(x + 1, y);
 
-                    if (tile.getPosX() < this.size - 1 && tile.isTaken()) {
+                while (tile != null && sideTile != null && tile.getPosX() < this.size - 1 && tile.isTaken()) {
+                    if (!sideTile.isTaken()) {
+                        this.tiles.remove(tile);
+                        this.tiles.remove(sideTile);
+
+                        Tile newSideTile = new Tile(tile.getPosX() + 1, y, tile.getValue());
+                        Tile newTile = new Tile(tile.getPosX(), y, -1);
+
+                        this.tiles.add(newSideTile);
+                        this.tiles.add(newTile);
+
+                        tile = getTileAt(newSideTile.getPosX(), y);
+                        sideTile = getTileAt(newSideTile.getPosX() + 1, y);
+
                         actionMade = true;
+                    } else if (sideTile.getValue() == tile.getValue()) {
+                        this.tiles.remove(tile);
+                        this.tiles.remove(sideTile);
 
-                        if (!sideTile.isTaken()) {
-                            this.tiles.remove(tile);
-                            this.tiles.remove(sideTile);
+                        Tile newSideTile = new Tile(tile.getPosX() + 1, y, tile.getValue() * 2);
+                        Tile newTile = new Tile(tile.getPosX(), y, -1);
 
-                            Tile newSideTile = new Tile(x + 1, y, tile.getValue());
-                            Tile newTile = new Tile(x, y, -1);
+                        this.tiles.add(newSideTile);
+                        this.tiles.add(newTile);
 
-                            this.tiles.add(newSideTile);
-                            this.tiles.add(newTile);
-                        } else if (sideTile.getValue() == tile.getValue()) {
-                            this.tiles.remove(tile);
-                            this.tiles.remove(sideTile);
+                        tile = getTileAt(newSideTile.getPosX(), y);
+                        sideTile = getTileAt(newSideTile.getPosX() + 1, y);
 
-                            Tile newSideTile = new Tile(x + 1, y, tile.getValue() * 2);
-                            Tile newTile = new Tile(x, y, -1);
-
-                            this.tiles.add(newSideTile);
-                            this.tiles.add(newTile);
-                        }
+                        actionMade = true;
+                        break;
+                    } else {
+                        break;
                     }
                 }
             }
@@ -145,35 +164,43 @@ public class Grid {
     public boolean moveUp() {
         boolean actionMade = false;
 
-        // TODO: Optimize this
-        for (int i = 0; i < this.size * this.size; i++) {
-            for (int y = 0; y < this.size; y++) {
-                for (int x = 0; x < this.size; x++) {
-                    Tile tile = getTileAt(x, y);
-                    Tile sideTile = getTileAt(x, y - 1);
+        for (int x = 0; x < this.size; x++) {
+            for (int y = 1; y < this.size; y++) {
+                Tile tile = getTileAt(x, y);
+                Tile sideTile = getTileAt(x, y - 1);
 
-                    if (tile.getPosY() > 0 && tile.isTaken()) {
+                while (tile != null && sideTile != null && tile.getPosY() > 0 && tile.isTaken()) {
+                    if (!sideTile.isTaken()) {
+                        this.tiles.remove(tile);
+                        this.tiles.remove(sideTile);
+
+                        Tile newSideTile = new Tile(x, tile.getPosY() - 1, tile.getValue());
+                        Tile newTile = new Tile(x, tile.getPosY(), -1);
+
+                        this.tiles.add(newSideTile);
+                        this.tiles.add(newTile);
+
+                        tile = getTileAt(x, newSideTile.getPosY());
+                        sideTile = getTileAt(x, newSideTile.getPosY() - 1);
+
                         actionMade = true;
+                    } else if (sideTile.getValue() == tile.getValue()) {
+                        this.tiles.remove(tile);
+                        this.tiles.remove(sideTile);
 
-                        if (!sideTile.isTaken()) {
-                            this.tiles.remove(tile);
-                            this.tiles.remove(sideTile);
+                        Tile newSideTile = new Tile(x, tile.getPosY() - 1, tile.getValue() * 2);
+                        Tile newTile = new Tile(x, tile.getPosY(), -1);
 
-                            Tile newSideTile = new Tile(x, y - 1, tile.getValue());
-                            Tile newTile = new Tile(x, y, -1);
+                        this.tiles.add(newSideTile);
+                        this.tiles.add(newTile);
 
-                            this.tiles.add(newSideTile);
-                            this.tiles.add(newTile);
-                        } else if (sideTile.getValue() == tile.getValue()) {
-                            this.tiles.remove(tile);
-                            this.tiles.remove(sideTile);
+                        tile = getTileAt(x, newSideTile.getPosY());
+                        sideTile = getTileAt(x, newSideTile.getPosY() - 1);
 
-                            Tile newSideTile = new Tile(x, y - 1, tile.getValue() * 2);
-                            Tile newTile = new Tile(x, y, -1);
-
-                            this.tiles.add(newSideTile);
-                            this.tiles.add(newTile);
-                        }
+                        actionMade = true;
+                        break;
+                    } else {
+                        break;
                     }
                 }
             }
@@ -184,35 +211,43 @@ public class Grid {
     public boolean moveDown() {
         boolean actionMade = false;
 
-        // TODO: Optimize this
-        for (int i = 0; i < this.size * this.size; i++) {
-            for (int y = 0; y < this.size; y++) {
-                for (int x = 0; x < this.size; x++) {
-                    Tile tile = getTileAt(x, y);
-                    Tile sideTile = getTileAt(x, y + 1);
+        for (int x = 0; x < this.size; x++) {
+            for (int y = this.size - 2; y >= 0; y--) {
+                Tile tile = getTileAt(x, y);
+                Tile sideTile = getTileAt(x, y + 1);
 
-                    if (tile.getPosY() < this.size - 1 && tile.isTaken()) {
+                while (tile != null && sideTile != null && tile.getPosY() < this.size - 1 && tile.isTaken()) {
+                    if (!sideTile.isTaken()) {
+                        this.tiles.remove(tile);
+                        this.tiles.remove(sideTile);
+
+                        Tile newSideTile = new Tile(x, tile.getPosY() + 1, tile.getValue());
+                        Tile newTile = new Tile(x, tile.getPosY(), -1);
+
+                        this.tiles.add(newSideTile);
+                        this.tiles.add(newTile);
+
+                        tile = getTileAt(x, newSideTile.getPosY());
+                        sideTile = getTileAt(x, newSideTile.getPosY() + 1);
+
                         actionMade = true;
+                    } else if (sideTile.getValue() == tile.getValue()) {
+                        this.tiles.remove(tile);
+                        this.tiles.remove(sideTile);
 
-                        if (!sideTile.isTaken()) {
-                            this.tiles.remove(tile);
-                            this.tiles.remove(sideTile);
+                        Tile newSideTile = new Tile(x, tile.getPosY() + 1, tile.getValue() * 2);
+                        Tile newTile = new Tile(x, tile.getPosY(), -1);
 
-                            Tile newSideTile = new Tile(x, y + 1, tile.getValue());
-                            Tile newTile = new Tile(x, y, -1);
+                        this.tiles.add(newSideTile);
+                        this.tiles.add(newTile);
 
-                            this.tiles.add(newSideTile);
-                            this.tiles.add(newTile);
-                        } else if (sideTile.getValue() == tile.getValue()) {
-                            this.tiles.remove(tile);
-                            this.tiles.remove(sideTile);
+                        tile = getTileAt(x, newSideTile.getPosY());
+                        sideTile = getTileAt(x, newSideTile.getPosY() + 1);
 
-                            Tile newSideTile = new Tile(x, y + 1, tile.getValue() * 2);
-                            Tile newTile = new Tile(x, y, -1);
-
-                            this.tiles.add(newSideTile);
-                            this.tiles.add(newTile);
-                        }
+                        actionMade = true;
+                        break;
+                    } else {
+                        break;
                     }
                 }
             }
