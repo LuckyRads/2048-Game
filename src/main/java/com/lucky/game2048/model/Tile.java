@@ -1,15 +1,32 @@
 package com.lucky.game2048.model;
 
-public class Tile {
+import javax.swing.*;
+import java.awt.*;
+import java.util.HashMap;
+
+/**
+ * This class is responsible for all operations associated with the grid element tile.
+ */
+public class Tile extends JLabel {
 
     private int posX;
     private int posY;
     private int value;
+    private HashMap<Integer, Color> colorMap = new HashMap<Integer, Color>();
 
     public Tile(int posX, int posY, int value) {
         this.posX = posX;
         this.posY = posY;
         this.value = value;
+
+        assignColorMap();
+
+        this.setOpaque(true);
+        this.setText(getTileGridValue());
+        this.setFont(this.getFont().deriveFont(50f));
+        this.setHorizontalAlignment(JLabel.CENTER);
+        this.setVerticalAlignment(JLabel.CENTER);
+        this.setBackground(colorMap.get(this.value));
     }
 
     public int getPosX() {
@@ -34,6 +51,21 @@ public class Tile {
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    private void assignColorMap() {
+        colorMap.put(-1, Color.GRAY);
+        colorMap.put(2, Color.LIGHT_GRAY);
+        colorMap.put(4, Color.LIGHT_GRAY);
+        colorMap.put(8, Color.PINK);
+        colorMap.put(16, Color.PINK);
+        colorMap.put(32, Color.ORANGE);
+        colorMap.put(64, Color.ORANGE);
+        colorMap.put(128, Color.RED);
+        colorMap.put(256, Color.RED);
+        colorMap.put(512, Color.CYAN);
+        colorMap.put(1024, Color.CYAN);
+        colorMap.put(2048, Color.MAGENTA);
     }
 
     public String getTileGridValue() {

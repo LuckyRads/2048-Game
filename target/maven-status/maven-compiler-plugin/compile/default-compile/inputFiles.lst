@@ -1,1 +1,10 @@
-C:\Users\Matas\Documents\Git\2048-Game\src\main\java\com\lucky\game\Main.java
+C:\Users\Matas\Documents\Git\2048-Game\src\main\java\com\lucky\game2048\model\Tile.java
+C:\Users\Matas\Documents\Git\2048-Game\src\main\java\com\lucky\game2048\WindowsMain.java
+C:\Users\Matas\Documents\Git\2048-Game\src\main\java\com\lucky\game2048\service\InputService.java
+C:\Users\Matas\Documents\Git\2048-Game\src\main\java\com\lucky\game2048\controller\GameStateController.java
+C:\Users\Matas\Documents\Git\2048-Game\src\main\java\com\lucky\game2048\util\NumberUtil.java
+C:\Users\Matas\Documents\Git\2048-Game\src\main\java\com\lucky\game2048\service\ConsoleRenderingService.java
+C:\Users\Matas\Documents\Git\2048-Game\src\main\java\com\lucky\game2048\service\WindowsRenderingService.java
+C:\Users\Matas\Documents\Git\2048-Game\src\main\java\com\lucky\game2048\ConsoleMain.java
+C:\Users\Matas\Documents\Git\2048-Game\src\main\java\com\lucky\game2048\controller\GameController.java
+C:\Users\Matas\Documents\Git\2048-Game\src\main\java\com\lucky\game2048\model\Grid.java
