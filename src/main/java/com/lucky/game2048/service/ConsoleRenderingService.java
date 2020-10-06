@@ -23,4 +23,13 @@ public class ConsoleRenderingService {
         System.out.println("Enter q to quit the game.");
     }
 
+    public void showGameOver(boolean gameWon, int result) {
+        if (gameWon) {
+            System.out.println("Congratulations! You have won the game!");
+        } else {
+            System.out.println("Too bad, you have lost the game! Play again and beat it next time!");
+        }
+        System.out.println("Your result is " + result);
+    }
+
 }

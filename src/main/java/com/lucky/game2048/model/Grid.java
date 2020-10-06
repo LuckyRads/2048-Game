@@ -4,7 +4,6 @@ import com.lucky.game2048.util.NumberUtil;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +18,9 @@ public class Grid extends JPanel {
         this.gridSize = gridSize;
         this.tiles = tiles;
         generateGrid();
-        setLayout(new GridLayout(gridSize, gridSize, 5, 5));
+        generateTile();
+        setLayout(new GridLayout(gridSize, gridSize, 10, 10));
+        setBackground(Color.DARK_GRAY);
     }
 
     public int getGridSize() {

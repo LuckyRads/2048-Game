@@ -9,14 +9,20 @@ import java.util.ArrayList;
 /**
  * Default main class for console game version.
  */
-public class Main {
+public class ConsoleMain {
 
     public static void main(String[] args) {
         Grid grid = new Grid(4, new ArrayList<Tile>());
         GameController gameController = new GameController();
 
-        gameController.startGame(grid);
-
+        try {
+            gameController.runGame(grid);
+        } catch (Exception e) {
+            System.out.println("An error has occurred!");
+            System.out.println("Please contact technical support.");
+            System.out.println("Printing exception stack trace:");
+            e.printStackTrace();
+        }
     }
 
 }

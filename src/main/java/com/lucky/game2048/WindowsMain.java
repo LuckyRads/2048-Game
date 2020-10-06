@@ -3,11 +3,9 @@ package com.lucky.game2048;
 import com.lucky.game2048.controller.GameController;
 import com.lucky.game2048.model.Grid;
 import com.lucky.game2048.model.Tile;
-import com.lucky.game2048.service.WindowsRenderingService;
 
 import javax.swing.*;
 import java.awt.*;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 /**
@@ -17,15 +15,11 @@ public class WindowsMain {
 
     public static void main(String[] args) {
         GameController gameController = new GameController();
-
         JFrame gameFrame = new JFrame();
+
         createGameWindow(gameFrame);
 
-        try {
-            gameController.startGame(gameFrame);
-        } catch (InvocationTargetException | InterruptedException e) {
-            e.printStackTrace();
-        }
+        gameController.runGame(gameFrame);
     }
 
     public static void createGameWindow(JFrame jFrame) {
