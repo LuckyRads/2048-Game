@@ -1,7 +1,5 @@
 package com.lucky.game2048.model;
 
-import com.lucky.game2048.util.NumberUtil;
-
 public class Tile {
 
     private int posX;

@@ -4,7 +4,7 @@ import com.lucky.game2048.model.Grid;
 
 public class RenderingService {
 
-    public static void renderGrid(Grid grid) {
+    public void renderGrid(Grid grid) {
         String format = "%5s";
         System.out.println("----------------------");
         for (int y = 0; y < grid.getSize(); y++) {
