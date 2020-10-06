@@ -19,8 +19,8 @@ public class Grid extends JPanel {
         this.tiles = tiles;
         generateGrid();
         generateTile();
-        setLayout(new GridLayout(gridSize, gridSize, 10, 10));
-        setBackground(Color.DARK_GRAY);
+        this.setLayout(new GridLayout(gridSize, gridSize, 10, 10));
+        this.setBackground(Color.DARK_GRAY);
     }
 
     public int getGridSize() {
