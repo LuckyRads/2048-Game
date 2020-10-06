@@ -11,6 +11,7 @@ Year 3 Semester 1 of VGTU bachelor studies.
 
 ## Project structure
 - <code>.idea/</code> contains IntelliJ IDEA IDE files
+- <code>build/</code> contains built programs
 - <code>doc/</code> contains task files
 - <code>src/</code> contains all Java project files
 - <code>target/</code> contains Maven build files
