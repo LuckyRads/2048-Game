@@ -2,6 +2,7 @@ package com.lucky.game2048.controller;
 
 import com.lucky.game2048.model.Grid;
 import com.lucky.game2048.model.Tile;
+import com.lucky.game2048.model.TilePosition;
 import com.lucky.game2048.service.ConsoleRenderingService;
 import com.lucky.game2048.service.WindowsRenderingService;
 
@@ -18,8 +19,11 @@ public class GameStateController {
 
         calculateResult(grid);
 
-        if (isGameWon(grid) || isGameLost(grid)) {
-            consoleRenderingService.showGameOver(gameWon, result);
+        if (!gameWon && isGameWon(grid))
+            consoleRenderingService.showGameWon();
+
+        if (isGameLost(grid)) {
+            consoleRenderingService.showGameOver(result);
             System.exit(0);
         }
     }
@@ -29,8 +33,11 @@ public class GameStateController {
 
         calculateResult(grid);
 
-        if (isGameWon(grid) || isGameLost(grid)) {
-            windowsRenderingService.showGameOver(gameWon, result);
+        if (!gameWon && isGameWon(grid))
+            windowsRenderingService.showGameWon();
+
+        if (isGameLost(grid)) {
+            windowsRenderingService.showGameOver(result);
             System.exit(0);
         }
     }
@@ -46,15 +53,20 @@ public class GameStateController {
     }
 
     private boolean isGameLost(Grid grid) {
-        /*
-        TODO: Fix game lost condition.
-        Game is lost when user can no longer do any moves, not when all tiles are occupied
-         */
-        int occupiedTiles = 0;
-        for (Tile tile : grid.getTiles()) {
-            occupiedTiles += tile.getValue() > 0 ? 1 : 0;
+        for (int y = 0; y < grid.getGridSize(); y++) {
+            for (int x = 0; x < grid.getGridSize(); x++) {
+                for (TilePosition tilePosition : TilePosition.values()) {
+                    Tile tile = grid.getTileAt(x, y);
+                    Tile sideTile = grid.getSideTile(tile, tilePosition);
+
+                    if (grid.canBeMoved(tile, sideTile, tilePosition) && !sideTile.isTaken() ||
+                            grid.canBeMoved(tile, sideTile, tilePosition) && grid.areMergeable(tile, sideTile)) {
+                        return false;
+                    }
+                }
+            }
         }
-        return occupiedTiles >= grid.getGridSize() * grid.getGridSize();
+        return true;
     }
 
     private void calculateResult(Grid grid) {

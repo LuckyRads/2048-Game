@@ -17,20 +17,19 @@ public class WindowsRenderingService {
 
         for (int y = 0; y < grid.getGridSize(); y++) {
             for (int x = 0; x < grid.getGridSize(); x++) {
-                Tile tile = grid.getTileAt(x, y);
-                gameFrame.getContentPane().add(tile);
+                gameFrame.getContentPane().add(grid.getTileAt(x, y));
             }
         }
         gameFrame.revalidate();
         gameFrame.repaint();
     }
 
-    public void showGameOver(boolean gameWon, int result) {
-        if (gameWon) {
-            JOptionPane.showMessageDialog(null, "Congratulations! You have won the game!\nYour result is " + result);
-        } else {
-            JOptionPane.showMessageDialog(null, "Too bad, you have lost the game! Play again and beat it next time!\nYour result is " + result);
-        }
+    public void showGameWon() {
+        JOptionPane.showMessageDialog(null, "Congratulations! You have won the game!");
+    }
+
+    public void showGameOver(int result) {
+        JOptionPane.showMessageDialog(null, "Too bad, you have lost the game! Play again and beat it next time!\nYour result is " + result);
     }
 
 }
