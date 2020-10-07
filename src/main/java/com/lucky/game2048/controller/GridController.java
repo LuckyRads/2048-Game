@@ -4,6 +4,7 @@ import com.lucky.game2048.model.Grid;
 import com.lucky.game2048.model.Tile;
 import com.lucky.game2048.model.TilePosition;
 import com.lucky.game2048.util.GridUtil;
+import com.lucky.game2048.util.TileUtil;
 
 /**
  * This class controls grid tile movement mechanics and other grid associated methods.
@@ -19,8 +20,8 @@ public class GridController {
                 Tile tile = grid.getTileAt(x, y);
                 Tile sideTile = grid.getSideTile(tile, TilePosition.LEFT);
 
-                while (GridUtil.canBeMoved(tile, sideTile, TilePosition.LEFT, grid.getGridSize()) && !sideTile.isTaken() ||
-                        GridUtil.canBeMoved(tile, sideTile, TilePosition.LEFT, grid.getGridSize()) && GridUtil.canBeMerged(tile, sideTile)) {
+                while (TileUtil.canBeMoved(tile, sideTile, TilePosition.LEFT, grid.getGridSize()) && !sideTile.isTaken() ||
+                        TileUtil.canBeMoved(tile, sideTile, TilePosition.LEFT, grid.getGridSize()) && TileUtil.canBeMerged(tile, sideTile)) {
 
                     actionMade = true;
 
@@ -30,7 +31,7 @@ public class GridController {
 
                     if (!sideTile.isTaken()) {
                         grid.addTile(new Tile(tile.getPosX() - 1, y, tile.getValue()));
-                    } else if (GridUtil.canBeMerged(tile, sideTile)) {
+                    } else if (TileUtil.canBeMerged(tile, sideTile)) {
                         grid.addTile(new Tile(tile.getPosX() - 1, y, tile.getValue() * 2));
                         break;
                     }
@@ -52,8 +53,8 @@ public class GridController {
                 Tile tile = grid.getTileAt(x, y);
                 Tile sideTile = grid.getSideTile(tile, TilePosition.RIGHT);
 
-                while (GridUtil.canBeMoved(tile, sideTile, TilePosition.RIGHT, grid.getGridSize()) && !sideTile.isTaken() ||
-                        GridUtil.canBeMoved(tile, sideTile, TilePosition.RIGHT, grid.getGridSize()) && GridUtil.canBeMerged(tile, sideTile)) {
+                while (TileUtil.canBeMoved(tile, sideTile, TilePosition.RIGHT, grid.getGridSize()) && !sideTile.isTaken() ||
+                        TileUtil.canBeMoved(tile, sideTile, TilePosition.RIGHT, grid.getGridSize()) && TileUtil.canBeMerged(tile, sideTile)) {
 
                     actionMade = true;
 
@@ -63,7 +64,7 @@ public class GridController {
 
                     if (!sideTile.isTaken()) {
                         grid.addTile(new Tile(tile.getPosX() + 1, y, tile.getValue()));
-                    } else if (GridUtil.canBeMerged(tile, sideTile)) {
+                    } else if (TileUtil.canBeMerged(tile, sideTile)) {
                         grid.addTile(new Tile(tile.getPosX() + 1, y, tile.getValue() * 2));
                         break;
                     }
@@ -85,8 +86,8 @@ public class GridController {
                 Tile tile = grid.getTileAt(x, y);
                 Tile sideTile = grid.getSideTile(tile, TilePosition.TOP);
 
-                while (GridUtil.canBeMoved(tile, sideTile, TilePosition.TOP, grid.getGridSize()) && !sideTile.isTaken() ||
-                        GridUtil.canBeMoved(tile, sideTile, TilePosition.TOP, grid.getGridSize()) && GridUtil.canBeMerged(tile, sideTile)) {
+                while (TileUtil.canBeMoved(tile, sideTile, TilePosition.TOP, grid.getGridSize()) && !sideTile.isTaken() ||
+                        TileUtil.canBeMoved(tile, sideTile, TilePosition.TOP, grid.getGridSize()) && TileUtil.canBeMerged(tile, sideTile)) {
 
                     actionMade = true;
 
@@ -96,7 +97,7 @@ public class GridController {
 
                     if (!sideTile.isTaken()) {
                         grid.addTile(new Tile(x, tile.getPosY() - 1, tile.getValue()));
-                    } else if (GridUtil.canBeMerged(tile, sideTile)) {
+                    } else if (TileUtil.canBeMerged(tile, sideTile)) {
                         grid.addTile(new Tile(x, tile.getPosY() - 1, tile.getValue() * 2));
                         break;
                     }
@@ -118,8 +119,8 @@ public class GridController {
                 Tile tile = grid.getTileAt(x, y);
                 Tile sideTile = grid.getSideTile(tile, TilePosition.BOTTOM);
 
-                while (GridUtil.canBeMoved(tile, sideTile, TilePosition.BOTTOM, grid.getGridSize()) && !sideTile.isTaken() ||
-                        GridUtil.canBeMoved(tile, sideTile, TilePosition.BOTTOM, grid.getGridSize()) && GridUtil.canBeMerged(tile, sideTile)) {
+                while (TileUtil.canBeMoved(tile, sideTile, TilePosition.BOTTOM, grid.getGridSize()) && !sideTile.isTaken() ||
+                        TileUtil.canBeMoved(tile, sideTile, TilePosition.BOTTOM, grid.getGridSize()) && TileUtil.canBeMerged(tile, sideTile)) {
 
                     actionMade = true;
 
@@ -129,7 +130,7 @@ public class GridController {
 
                     if (!sideTile.isTaken()) {
                         grid.addTile(new Tile(x, tile.getPosY() + 1, tile.getValue()));
-                    } else if (GridUtil.canBeMerged(tile, sideTile)) {
+                    } else if (TileUtil.canBeMerged(tile, sideTile)) {
                         grid.addTile(new Tile(x, tile.getPosY() + 1, tile.getValue() * 2));
                         break;
                     }

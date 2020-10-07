@@ -10,7 +10,8 @@ public class InfoLabel extends JLabel {
 
     private static Color TEXT_COLOR = Color.LIGHT_GRAY;
 
-    public InfoLabel(String text, Color panelColor) {
+    public InfoLabel(String name, String text, Color panelColor) {
+        this.setName(name);
         this.setText(text);
         this.setOpaque(true);
         this.setFont(this.getFont().deriveFont(18f));

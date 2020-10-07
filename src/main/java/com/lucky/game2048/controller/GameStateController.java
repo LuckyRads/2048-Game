@@ -1,21 +1,21 @@
 package com.lucky.game2048.controller;
 
-import com.lucky.game2048.model.Grid;
-import com.lucky.game2048.model.Tile;
-import com.lucky.game2048.model.TilePosition;
+import com.lucky.game2048.model.*;
 import com.lucky.game2048.service.ConsoleRenderingService;
 import com.lucky.game2048.service.WindowsRenderingService;
-import com.lucky.game2048.util.GridUtil;
+import com.lucky.game2048.util.TileUtil;
+
+import java.awt.*;
 
 /**
  * This class contains methods and variables responsible for game state.
  */
 public class GameStateController {
 
-    private boolean gameWon = false;
-    private int result = 0;
+    private static boolean gameWon = false;
+    public static int result = 0;
 
-    public void checkForGameOverConsole(Grid grid) {
+    public static void checkForGameOverConsole(Grid grid) {
         ConsoleRenderingService consoleRenderingService = new ConsoleRenderingService();
 
         calculateResult(grid);
@@ -24,26 +24,28 @@ public class GameStateController {
             consoleRenderingService.showGameWon();
 
         if (isGameLost(grid)) {
-            consoleRenderingService.showGameOver(result);
+            consoleRenderingService.showGameOver();
             System.exit(0);
         }
     }
 
-    public void checkForGameOverWindows(Grid grid) {
+    public static void checkForGameOverWindows(GameFrame gameFrame) {
         WindowsRenderingService windowsRenderingService = new WindowsRenderingService();
 
-        calculateResult(grid);
+        calculateResult(gameFrame.getGrid());
 
-        if (!gameWon && isGameWon(grid))
+        prepareResultForRendering(gameFrame);
+
+        if (!gameWon && isGameWon(gameFrame.getGrid()))
             windowsRenderingService.showGameWon();
 
-        if (isGameLost(grid)) {
-            windowsRenderingService.showGameOver(result);
+        if (isGameLost(gameFrame.getGrid())) {
+            windowsRenderingService.showGameOver();
             System.exit(0);
         }
     }
 
-    private boolean isGameWon(Grid grid) {
+    private static boolean isGameWon(Grid grid) {
         for (Tile tile : grid.getTiles()) {
             if (tile.getValue() >= 2048) {
                 gameWon = true;
@@ -53,15 +55,15 @@ public class GameStateController {
         return false;
     }
 
-    private boolean isGameLost(Grid grid) {
+    private static boolean isGameLost(Grid grid) {
         for (int y = 0; y < grid.getGridSize(); y++) {
             for (int x = 0; x < grid.getGridSize(); x++) {
                 for (TilePosition tilePosition : TilePosition.values()) {
                     Tile tile = grid.getTileAt(x, y);
                     Tile sideTile = grid.getSideTile(tile, tilePosition);
 
-                    if (GridUtil.canBeMoved(tile, sideTile, tilePosition, grid.getGridSize()) && !sideTile.isTaken() ||
-                            GridUtil.canBeMoved(tile, sideTile, tilePosition, grid.getGridSize()) && GridUtil.canBeMerged(tile, sideTile)) {
+                    if (TileUtil.canBeMoved(tile, sideTile, tilePosition, grid.getGridSize()) && !sideTile.isTaken() ||
+                            TileUtil.canBeMoved(tile, sideTile, tilePosition, grid.getGridSize()) && TileUtil.canBeMerged(tile, sideTile)) {
                         return false;
                     }
                 }
@@ -70,10 +72,21 @@ public class GameStateController {
         return true;
     }
 
-    private void calculateResult(Grid grid) {
+    private static void calculateResult(Grid grid) {
         for (Tile tile : grid.getTiles()) {
             if (tile.getValue() > result)
                 result = tile.getValue();
+        }
+    }
+
+    private static void prepareResultForRendering(GameFrame gameFrame) {
+        for (Component component : gameFrame.getInfoPanel().getComponents()) {
+            if (component instanceof InfoLabel && component.getName().equals("result")) {
+                gameFrame.getInfoPanel().remove(component);
+                ((InfoLabel) component).setText("Result: " + GameStateController.result);
+                gameFrame.getInfoPanel().add(component);
+                return;
+            }
         }
     }
 

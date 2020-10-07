@@ -1,6 +1,7 @@
 package com.lucky.game2048.service;
 
-import com.lucky.game2048.model.Grid;
+import com.lucky.game2048.controller.GameStateController;
+import com.lucky.game2048.model.GameFrame;
 import com.lucky.game2048.util.GridUtil;
 
 import javax.swing.*;
@@ -10,24 +11,9 @@ import javax.swing.*;
  */
 public class WindowsRenderingService {
 
-    public void renderGrid(JFrame gameFrame) {
-        Grid grid = GridUtil.extractGridFromFrame(gameFrame);
+    public void renderGrid(GameFrame gameFrame) {
 
-        gameFrame.getContentPane().remove(grid);
-
-        for (int y = 0; y < grid.getGridSize(); y++) {
-            for (int x = 0; x < grid.getGridSize(); x++) {
-                grid.remove(grid.getTileAt(x, y));
-            }
-        }
-
-        for (int y = 0; y < grid.getGridSize(); y++) {
-            for (int x = 0; x < grid.getGridSize(); x++) {
-                grid.add(grid.getTileAt(x, y));
-            }
-        }
-
-        gameFrame.getContentPane().add(grid, 0);
+        GridUtil.rearrangeGrid(gameFrame.getGrid());
 
         gameFrame.revalidate();
         gameFrame.repaint();
@@ -37,8 +23,10 @@ public class WindowsRenderingService {
         JOptionPane.showMessageDialog(null, "Congratulations! You have won the game!");
     }
 
-    public void showGameOver(int result) {
-        JOptionPane.showMessageDialog(null, "Too bad, you have lost the game! Play again and beat it next time!\nYour result is " + result);
+    public void showGameOver() {
+        JOptionPane.showMessageDialog(null, "Too bad, you have lost the game!" +
+                "Play again and beat it next time!" +
+                "\nYour result is " + GameStateController.result);
     }
 
 }

@@ -15,7 +15,10 @@ public class InfoPanel extends JPanel {
         this.setBackground(this.COLOR);
         this.setPreferredSize(new Dimension((int) dimension.getWidth(), this.HEIGHT));
         this.setMaximumSize(new Dimension(Integer.MAX_VALUE, this.HEIGHT));
-        this.add(new InfoLabel("Use w, a, s, d keys to move the tiles. Press q to quit the game.", this.COLOR));
+        this.setLayout(new GridLayout(3, 1));
+        this.add(new InfoLabel("movement", "Use w, a, s, d keys to move the tiles.", this.COLOR));
+        this.add(new InfoLabel("quit", "Press q to quit the game.", this.COLOR));
+        this.add(new InfoLabel("result", "Result: 0", this.COLOR));
     }
 
 }

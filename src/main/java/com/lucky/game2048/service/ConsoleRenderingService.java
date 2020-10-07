@@ -1,5 +1,6 @@
 package com.lucky.game2048.service;
 
+import com.lucky.game2048.controller.GameStateController;
 import com.lucky.game2048.model.Grid;
 
 /**
@@ -21,14 +22,15 @@ public class ConsoleRenderingService {
         System.out.println("----------------------");
         System.out.println("Use w, a, s, d keys to move the tiles.");
         System.out.println("Enter q to quit the game.");
+        System.out.println("Your result is " + GameStateController.result);
     }
 
     public void showGameWon() {
         System.out.println("Congratulations! You have won the game!");
     }
 
-    public void showGameOver(int result) {
-        System.out.println("Too bad, you have lost the game! Play again and beat it next time!\nYour result is " + result);
+    public void showGameOver() {
+        System.out.println("Too bad, you have lost the game! Play again and beat it next time!\nYour result is " + GameStateController.result);
     }
 
 }

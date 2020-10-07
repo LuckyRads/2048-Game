@@ -27,4 +27,19 @@ public class GameFrame extends JFrame {
         this.setVisible(true);
     }
 
+    public Grid getGrid() {
+        return grid;
+    }
+
+    public void setGrid(Grid grid) {
+        this.grid = grid;
+    }
+
+    public JPanel getInfoPanel() {
+        return infoPanel;
+    }
+
+    public void setInfoPanel(JPanel infoPanel) {
+        this.infoPanel = infoPanel;
+    }
 }
