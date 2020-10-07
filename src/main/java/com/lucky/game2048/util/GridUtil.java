@@ -7,6 +7,10 @@ import com.lucky.game2048.model.TilePosition;
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ * This class contains grid utilities/tools.
+ */
 public class GridUtil {
 
     public static Grid extractGridFromFrame(JFrame gameFrame) {

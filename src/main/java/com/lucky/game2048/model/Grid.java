@@ -13,6 +13,7 @@ public class Grid extends JPanel {
 
     private int gridSize;
     private List<Tile> tiles;
+    private static Color COLOR = Color.DARK_GRAY;
 
     public Grid(int gridSize, List<Tile> tiles, Dimension dimension) {
         this.gridSize = gridSize;
@@ -20,7 +21,7 @@ public class Grid extends JPanel {
         generateGrid();
         generateTile();
         this.setLayout(new GridLayout(gridSize, gridSize, 10, 10));
-        this.setBackground(Color.DARK_GRAY);
+        this.setBackground(this.COLOR);
         this.setPreferredSize(dimension);
     }
 

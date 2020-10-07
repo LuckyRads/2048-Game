@@ -7,7 +7,6 @@ import com.lucky.game2048.service.WindowsRenderingService;
 import com.lucky.game2048.util.GridUtil;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;

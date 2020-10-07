@@ -4,7 +4,6 @@ import com.lucky.game2048.model.Grid;
 import com.lucky.game2048.util.GridUtil;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * This class is responsible for rendering game objects in windows application.

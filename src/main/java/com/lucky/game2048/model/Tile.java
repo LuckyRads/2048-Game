@@ -26,7 +26,7 @@ public class Tile extends JLabel {
         this.setFont(this.getFont().deriveFont(50f));
         this.setHorizontalAlignment(JLabel.CENTER);
         this.setVerticalAlignment(JLabel.CENTER);
-        this.setBackground(colorMap.get(this.value));
+        this.setBackground(colorMap.get(value));
     }
 
     public int getPosX() {
