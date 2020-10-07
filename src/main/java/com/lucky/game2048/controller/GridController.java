@@ -3,9 +3,10 @@ package com.lucky.game2048.controller;
 import com.lucky.game2048.model.Grid;
 import com.lucky.game2048.model.Tile;
 import com.lucky.game2048.model.TilePosition;
+import com.lucky.game2048.util.GridUtil;
 
 /**
- * This class controls grid tile movement mechanics.
+ * This class controls grid tile movement mechanics and other grid associated methods.
  */
 public class GridController {
 
@@ -18,23 +19,22 @@ public class GridController {
                 Tile tile = grid.getTileAt(x, y);
                 Tile sideTile = grid.getSideTile(tile, TilePosition.LEFT);
 
-                while (grid.canBeMoved(tile, sideTile, TilePosition.LEFT) && !sideTile.isTaken() ||
-                        grid.canBeMoved(tile, sideTile, TilePosition.LEFT) && grid.areMergeable(tile, sideTile)) {
+                while (GridUtil.canBeMoved(tile, sideTile, TilePosition.LEFT, grid.getGridSize()) && !sideTile.isTaken() ||
+                        GridUtil.canBeMoved(tile, sideTile, TilePosition.LEFT, grid.getGridSize()) && GridUtil.canBeMerged(tile, sideTile)) {
 
                     actionMade = true;
 
-                    grid.getTiles().remove(tile);
-                    grid.getTiles().remove(sideTile);
-                    grid.getTiles().add(new Tile(tile.getPosX(), y, -1));
+                    grid.removeTile(tile);
+                    grid.removeTile(sideTile);
+                    grid.addTile(new Tile(tile.getPosX(), y, -1));
 
                     if (!sideTile.isTaken()) {
-                        grid.getTiles().add(new Tile(tile.getPosX() - 1, y, tile.getValue()));
-                    } else if (grid.areMergeable(tile, sideTile)) {
-                        grid.getTiles().add(new Tile(tile.getPosX() - 1, y, tile.getValue() * 2));
+                        grid.addTile(new Tile(tile.getPosX() - 1, y, tile.getValue()));
+                    } else if (GridUtil.canBeMerged(tile, sideTile)) {
+                        grid.addTile(new Tile(tile.getPosX() - 1, y, tile.getValue() * 2));
                         break;
                     }
 
-//                    grid.moveTilePair(tile, sideTile, TilePosition.LEFT);
                     tile = grid.getSideTile(tile, TilePosition.LEFT);
                     sideTile = grid.getSideTile(tile, TilePosition.LEFT);
                 }
@@ -52,23 +52,22 @@ public class GridController {
                 Tile tile = grid.getTileAt(x, y);
                 Tile sideTile = grid.getSideTile(tile, TilePosition.RIGHT);
 
-                while (grid.canBeMoved(tile, sideTile, TilePosition.RIGHT) && !sideTile.isTaken() ||
-                        grid.canBeMoved(tile, sideTile, TilePosition.RIGHT) && grid.areMergeable(tile, sideTile)) {
+                while (GridUtil.canBeMoved(tile, sideTile, TilePosition.RIGHT, grid.getGridSize()) && !sideTile.isTaken() ||
+                        GridUtil.canBeMoved(tile, sideTile, TilePosition.RIGHT, grid.getGridSize()) && GridUtil.canBeMerged(tile, sideTile)) {
 
                     actionMade = true;
 
-                    grid.getTiles().remove(tile);
-                    grid.getTiles().remove(sideTile);
-                    grid.getTiles().add(new Tile(tile.getPosX(), y, -1));
+                    grid.removeTile(tile);
+                    grid.removeTile(sideTile);
+                    grid.addTile(new Tile(tile.getPosX(), y, -1));
 
                     if (!sideTile.isTaken()) {
-                        grid.getTiles().add(new Tile(tile.getPosX() + 1, y, tile.getValue()));
-                    } else if (grid.areMergeable(tile, sideTile)) {
-                        grid.getTiles().add(new Tile(tile.getPosX() + 1, y, tile.getValue() * 2));
+                        grid.addTile(new Tile(tile.getPosX() + 1, y, tile.getValue()));
+                    } else if (GridUtil.canBeMerged(tile, sideTile)) {
+                        grid.addTile(new Tile(tile.getPosX() + 1, y, tile.getValue() * 2));
                         break;
                     }
 
-//                    grid.moveTilePair(tile, sideTile, TilePosition.RIGHT);
                     tile = grid.getSideTile(tile, TilePosition.RIGHT);
                     sideTile = grid.getSideTile(tile, TilePosition.RIGHT);
                 }
@@ -86,23 +85,22 @@ public class GridController {
                 Tile tile = grid.getTileAt(x, y);
                 Tile sideTile = grid.getSideTile(tile, TilePosition.TOP);
 
-                while (grid.canBeMoved(tile, sideTile, TilePosition.TOP) && !sideTile.isTaken() ||
-                        grid.canBeMoved(tile, sideTile, TilePosition.TOP) && grid.areMergeable(tile, sideTile)) {
+                while (GridUtil.canBeMoved(tile, sideTile, TilePosition.TOP, grid.getGridSize()) && !sideTile.isTaken() ||
+                        GridUtil.canBeMoved(tile, sideTile, TilePosition.TOP, grid.getGridSize()) && GridUtil.canBeMerged(tile, sideTile)) {
 
                     actionMade = true;
 
-                    grid.getTiles().remove(tile);
-                    grid.getTiles().remove(sideTile);
-                    grid.getTiles().add(new Tile(x, tile.getPosY(), -1));
+                    grid.removeTile(tile);
+                    grid.removeTile(sideTile);
+                    grid.addTile(new Tile(x, tile.getPosY(), -1));
 
                     if (!sideTile.isTaken()) {
-                        grid.getTiles().add(new Tile(x, tile.getPosY() - 1, tile.getValue()));
-                    } else if (grid.areMergeable(tile, sideTile)) {
-                        grid.getTiles().add(new Tile(x, tile.getPosY() - 1, tile.getValue() * 2));
+                        grid.addTile(new Tile(x, tile.getPosY() - 1, tile.getValue()));
+                    } else if (GridUtil.canBeMerged(tile, sideTile)) {
+                        grid.addTile(new Tile(x, tile.getPosY() - 1, tile.getValue() * 2));
                         break;
                     }
 
-//                    grid.moveTilePair(tile, sideTile, TilePosition.RIGHT);
                     tile = grid.getSideTile(tile, TilePosition.TOP);
                     sideTile = grid.getSideTile(tile, TilePosition.TOP);
                 }
@@ -120,23 +118,22 @@ public class GridController {
                 Tile tile = grid.getTileAt(x, y);
                 Tile sideTile = grid.getSideTile(tile, TilePosition.BOTTOM);
 
-                while (grid.canBeMoved(tile, sideTile, TilePosition.BOTTOM) && !sideTile.isTaken() ||
-                        grid.canBeMoved(tile, sideTile, TilePosition.BOTTOM) && grid.areMergeable(tile, sideTile)) {
+                while (GridUtil.canBeMoved(tile, sideTile, TilePosition.BOTTOM, grid.getGridSize()) && !sideTile.isTaken() ||
+                        GridUtil.canBeMoved(tile, sideTile, TilePosition.BOTTOM, grid.getGridSize()) && GridUtil.canBeMerged(tile, sideTile)) {
 
                     actionMade = true;
 
-                    grid.getTiles().remove(tile);
-                    grid.getTiles().remove(sideTile);
-                    grid.getTiles().add(new Tile(x, tile.getPosY(), -1));
+                    grid.removeTile(tile);
+                    grid.removeTile(sideTile);
+                    grid.addTile(new Tile(x, tile.getPosY(), -1));
 
                     if (!sideTile.isTaken()) {
-                        grid.getTiles().add(new Tile(x, tile.getPosY() + 1, tile.getValue()));
-                    } else if (grid.areMergeable(tile, sideTile)) {
-                        grid.getTiles().add(new Tile(x, tile.getPosY() + 1, tile.getValue() * 2));
+                        grid.addTile(new Tile(x, tile.getPosY() + 1, tile.getValue()));
+                    } else if (GridUtil.canBeMerged(tile, sideTile)) {
+                        grid.addTile(new Tile(x, tile.getPosY() + 1, tile.getValue() * 2));
                         break;
                     }
 
-//                    grid.moveTilePair(tile, sideTile, TilePosition.BOTTOM);
                     tile = grid.getSideTile(tile, TilePosition.BOTTOM);
                     sideTile = grid.getSideTile(tile, TilePosition.BOTTOM);
                 }

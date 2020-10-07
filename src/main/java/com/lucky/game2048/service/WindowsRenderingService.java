@@ -1,9 +1,10 @@
 package com.lucky.game2048.service;
 
 import com.lucky.game2048.model.Grid;
-import com.lucky.game2048.model.Tile;
+import com.lucky.game2048.util.GridUtil;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * This class is responsible for rendering game objects in windows application.
@@ -11,15 +12,24 @@ import javax.swing.*;
 public class WindowsRenderingService {
 
     public void renderGrid(JFrame gameFrame) {
-        Grid grid = (Grid) gameFrame.getContentPane();
+        Grid grid = GridUtil.extractGridFromFrame(gameFrame);
 
-        gameFrame.getContentPane().removeAll();
+        gameFrame.getContentPane().remove(grid);
 
         for (int y = 0; y < grid.getGridSize(); y++) {
             for (int x = 0; x < grid.getGridSize(); x++) {
-                gameFrame.getContentPane().add(grid.getTileAt(x, y));
+                grid.remove(grid.getTileAt(x, y));
             }
         }
+
+        for (int y = 0; y < grid.getGridSize(); y++) {
+            for (int x = 0; x < grid.getGridSize(); x++) {
+                grid.add(grid.getTileAt(x, y));
+            }
+        }
+
+        gameFrame.getContentPane().add(grid, 0);
+
         gameFrame.revalidate();
         gameFrame.repaint();
     }

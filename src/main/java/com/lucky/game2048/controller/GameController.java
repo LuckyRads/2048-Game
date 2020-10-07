@@ -4,8 +4,10 @@ import com.lucky.game2048.model.Grid;
 import com.lucky.game2048.service.ConsoleRenderingService;
 import com.lucky.game2048.service.InputService;
 import com.lucky.game2048.service.WindowsRenderingService;
+import com.lucky.game2048.util.GridUtil;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
@@ -40,9 +42,9 @@ public class GameController {
                 gameFrame.addKeyListener(new KeyListener() {
                     @Override
                     public void keyPressed(KeyEvent e) {
-                        inputService.processInput((int) e.getKeyChar(), (Grid) gameFrame.getContentPane());
+                        inputService.processInput((int) e.getKeyChar(), GridUtil.extractGridFromFrame(gameFrame));
                         windowsRenderingService.renderGrid(gameFrame);
-                        gameStateController.checkForGameOverWindows((Grid) gameFrame.getContentPane());
+                        gameStateController.checkForGameOverWindows(GridUtil.extractGridFromFrame(gameFrame));
                     }
 
                     @Override

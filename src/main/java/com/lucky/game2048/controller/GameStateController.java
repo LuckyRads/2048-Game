@@ -5,6 +5,7 @@ import com.lucky.game2048.model.Tile;
 import com.lucky.game2048.model.TilePosition;
 import com.lucky.game2048.service.ConsoleRenderingService;
 import com.lucky.game2048.service.WindowsRenderingService;
+import com.lucky.game2048.util.GridUtil;
 
 /**
  * This class contains methods and variables responsible for game state.
@@ -59,8 +60,8 @@ public class GameStateController {
                     Tile tile = grid.getTileAt(x, y);
                     Tile sideTile = grid.getSideTile(tile, tilePosition);
 
-                    if (grid.canBeMoved(tile, sideTile, tilePosition) && !sideTile.isTaken() ||
-                            grid.canBeMoved(tile, sideTile, tilePosition) && grid.areMergeable(tile, sideTile)) {
+                    if (GridUtil.canBeMoved(tile, sideTile, tilePosition, grid.getGridSize()) && !sideTile.isTaken() ||
+                            GridUtil.canBeMoved(tile, sideTile, tilePosition, grid.getGridSize()) && GridUtil.canBeMerged(tile, sideTile)) {
                         return false;
                     }
                 }

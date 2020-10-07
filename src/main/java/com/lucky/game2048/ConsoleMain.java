@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class ConsoleMain {
 
     public static void main(String[] args) {
-        Grid grid = new Grid(4, new ArrayList<Tile>());
+        Grid grid = new Grid(4, new ArrayList<Tile>(), null);
         GameController gameController = new GameController();
 
         try {

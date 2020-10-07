@@ -6,6 +6,7 @@ import com.lucky.game2048.model.Tile;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -22,15 +23,44 @@ public class WindowsMain {
         gameController.runGame(gameFrame);
     }
 
-    public static void createGameWindow(JFrame jFrame) {
-        jFrame.setTitle("2048 Game");
-        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jFrame.setPreferredSize(new Dimension(600, 600));
+    private static void createGameWindow(JFrame gameFrame) {
+        gameFrame.setTitle("2048 Game");
+        gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gameFrame.setPreferredSize(new Dimension(600, 800));
+        gameFrame.setLayout(new BoxLayout(gameFrame.getContentPane(), BoxLayout.Y_AXIS));
 
-        jFrame.setContentPane(new Grid(4, new ArrayList<Tile>()));
+        JPanel infoPanel = createInfoPanel(gameFrame);
+        Grid grid = new Grid(4, new ArrayList<Tile>(),
+                new Dimension(gameFrame.getWidth(), gameFrame.getHeight() - infoPanel.getHeight()));
 
-        jFrame.pack();
-        jFrame.setVisible(true);
+        gameFrame.getContentPane().add(grid);
+        gameFrame.getContentPane().add(infoPanel);
+
+        gameFrame.pack();
+        gameFrame.setVisible(true);
+    }
+
+    private static JPanel createInfoPanel(JFrame gameFrame) {
+        JPanel infoPanel = new JPanel();
+        int height = 100;
+        Color panelColor = Color.DARK_GRAY;
+
+        infoPanel.setBackground(panelColor);
+        infoPanel.setPreferredSize(new Dimension(gameFrame.getWidth(), height));
+        infoPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, height));
+
+        JLabel instructions = new JLabel();
+        instructions.setOpaque(true);
+        instructions.setText("Use w, a, s, d keys to move the tiles. Press q to quit the game.");
+        instructions.setFont(instructions.getFont().deriveFont(18f));
+        instructions.setHorizontalAlignment(JLabel.CENTER);
+        instructions.setVerticalAlignment(JLabel.CENTER);
+        instructions.setBackground(panelColor);
+        instructions.setForeground(Color.LIGHT_GRAY);
+
+        infoPanel.add(instructions);
+
+        return infoPanel;
     }
 
 }

@@ -14,13 +14,14 @@ public class Grid extends JPanel {
     private int gridSize;
     private List<Tile> tiles;
 
-    public Grid(int gridSize, List<Tile> tiles) {
+    public Grid(int gridSize, List<Tile> tiles, Dimension dimension) {
         this.gridSize = gridSize;
         this.tiles = tiles;
         generateGrid();
         generateTile();
         this.setLayout(new GridLayout(gridSize, gridSize, 10, 10));
         this.setBackground(Color.DARK_GRAY);
+        this.setPreferredSize(dimension);
     }
 
     public int getGridSize() {
@@ -39,10 +40,20 @@ public class Grid extends JPanel {
         this.tiles = tiles;
     }
 
+    public void addTile(Tile tile) {
+        this.tiles.add(tile);
+        this.add(tile);
+    }
+
+    public void removeTile(Tile tile) {
+        this.tiles.remove(tile);
+        this.remove(tile);
+    }
+
     private void generateGrid() {
         for (int y = 0; y < this.gridSize; y++) {
             for (int x = 0; x < this.gridSize; x++) {
-                this.tiles.add(new Tile(x, y, -1));
+                addTile(new Tile(x, y, -1));
             }
         }
     }
@@ -54,8 +65,8 @@ public class Grid extends JPanel {
 
         while (true) {
             if (!getTileAt(tilePosX, tilePosY).isTaken()) {
-                this.tiles.remove(getTileAt(tilePosX, tilePosY));
-                this.tiles.add(new Tile(tilePosX, tilePosY, tileValue));
+                removeTile(getTileAt(tilePosX, tilePosY));
+                addTile(new Tile(tilePosX, tilePosY, tileValue));
                 return;
             }
             tilePosX = NumberUtil.generateRandomNumber(0, this.gridSize);
@@ -84,30 +95,6 @@ public class Grid extends JPanel {
                 return getTileAt(tile.getPosX(), tile.getPosY() + 1);
         }
         return null;
-    }
-
-    public boolean areMergeable(Tile tile, Tile sideTile) {
-        return sideTile.getValue() == tile.getValue();
-    }
-
-    public boolean canBeMoved(Tile tile, Tile sideTile, TilePosition tilePosition) {
-        switch (tilePosition) {
-            case LEFT:
-                return tile != null && sideTile != null && tile.getPosX() > 0 && tile.isTaken();
-            case RIGHT:
-                return tile != null && sideTile != null && tile.getPosX() < gridSize - 1 && tile.isTaken();
-            case TOP:
-                return tile != null && sideTile != null && tile.getPosY() > 0 && tile.isTaken();
-            case BOTTOM:
-                return tile != null && sideTile != null && tile.getPosY() < gridSize - 1 && tile.isTaken();
-        }
-        return false;
-    }
-
-    public void moveTilePair(Tile tile, Tile sideTile, TilePosition tilePosition) {
-        // TODO: Fix this
-        tile = getSideTile(tile, tilePosition);
-        sideTile = getSideTile(tile, tilePosition);
     }
 
 }
