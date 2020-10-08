@@ -5,11 +5,13 @@ Java implementation of the popular JS and mobile phone game 2048.<br>
 2048 game course project.<br>
 Year 3 Semester 1 of VGTU bachelor studies.
 
-## Requirements
+## General information
+
+### Prerequisites
 - Java
 - Maven
 
-## Project structure
+### Project structure
 - <code>.idea/</code> contains IntelliJ IDEA IDE files
 - <code>build/</code> contains built programs
 - <code>doc/</code> contains task files
