@@ -3,143 +3,101 @@ package com.lucky.game2048.controller;
 import com.lucky.game2048.model.Grid;
 import com.lucky.game2048.model.Tile;
 import com.lucky.game2048.model.TilePosition;
+import com.lucky.game2048.util.GridUtil;
 import com.lucky.game2048.util.TileUtil;
 
 /**
- * This class controls grid tile movement mechanics and other grid associated methods.
+ * This class controls grid tile movement mechanics and other grid associated
+ * methods.
  */
 public class GridController {
 
-    public boolean moveLeft(Grid grid) {
-        boolean actionMade = false;
+	private boolean moveTiles(Grid grid, int x, int y, TilePosition tilePosition) {
+		boolean actionMade = false;
 
-        for (int y = 0; y < grid.getGridSize(); y++) {
-            for (int x = 1; x < grid.getGridSize(); x++) {
+		Tile tile = grid.getTileAt(x, y);
+		Tile sideTile = grid.getSideTile(tile, tilePosition);
 
-                Tile tile = grid.getTileAt(x, y);
-                Tile sideTile = grid.getSideTile(tile, TilePosition.LEFT);
+		while (GridUtil.isMovementAvailable(tile, sideTile, tilePosition, grid)) {
 
-                while (TileUtil.canBeMoved(tile, sideTile, TilePosition.LEFT, grid.getGridSize()) && !sideTile.isTaken() ||
-                        TileUtil.canBeMoved(tile, sideTile, TilePosition.LEFT, grid.getGridSize()) && TileUtil.canBeMerged(tile, sideTile)) {
+			actionMade = true;
 
-                    actionMade = true;
+			grid.removeTile(tile);
+			grid.removeTile(sideTile);
+			grid.addTile(TileUtil.generateEmptyTile(tile));
 
-                    grid.removeTile(tile);
-                    grid.removeTile(sideTile);
-                    grid.addTile(new Tile(tile.getPosX(), y, -1));
+			if (!sideTile.isTaken()) {
+				grid.addTile(TileUtil.generateSideTile(tile, tilePosition, false));
+			} else if (TileUtil.canBeMerged(tile, sideTile)) {
+				grid.addTile(TileUtil.generateSideTile(tile, tilePosition, true));
+				break;
+			}
 
-                    if (!sideTile.isTaken()) {
-                        grid.addTile(new Tile(tile.getPosX() - 1, y, tile.getValue()));
-                    } else if (TileUtil.canBeMerged(tile, sideTile)) {
-                        grid.addTile(new Tile(tile.getPosX() - 1, y, tile.getValue() * 2));
-                        break;
-                    }
+			tile = grid.getSideTile(tile, tilePosition);
+			sideTile = grid.getSideTile(tile, tilePosition);
+		}
 
-                    tile = grid.getSideTile(tile, TilePosition.LEFT);
-                    sideTile = grid.getSideTile(tile, TilePosition.LEFT);
-                }
-            }
-        }
-        return actionMade;
-    }
+		return actionMade;
+	}
 
-    public boolean moveRight(Grid grid) {
-        boolean actionMade = false;
+	public boolean moveLeft(Grid grid) {
+		boolean actionMade = false;
 
-        for (int y = 0; y < grid.getGridSize(); y++) {
-            for (int x = grid.getGridSize() - 2; x >= 0; x--) {
+		for (int y = 0; y < grid.getGridSize(); y++) {
+			for (int x = 1; x < grid.getGridSize(); x++) {
+				if (!actionMade) {
+					actionMade = moveTiles(grid, x, y, TilePosition.LEFT);
+				} else {
+					moveTiles(grid, x, y, TilePosition.LEFT);
+				}
+			}
+		}
+		return actionMade;
+	}
 
-                Tile tile = grid.getTileAt(x, y);
-                Tile sideTile = grid.getSideTile(tile, TilePosition.RIGHT);
+	public boolean moveRight(Grid grid) {
+		boolean actionMade = false;
 
-                while (TileUtil.canBeMoved(tile, sideTile, TilePosition.RIGHT, grid.getGridSize()) && !sideTile.isTaken() ||
-                        TileUtil.canBeMoved(tile, sideTile, TilePosition.RIGHT, grid.getGridSize()) && TileUtil.canBeMerged(tile, sideTile)) {
+		for (int y = 0; y < grid.getGridSize(); y++) {
+			for (int x = grid.getGridSize() - 2; x >= 0; x--) {
+				if (!actionMade) {
+					actionMade = moveTiles(grid, x, y, TilePosition.RIGHT);
+				} else {
+					moveTiles(grid, x, y, TilePosition.RIGHT);
+				}
+			}
+		}
+		return actionMade;
+	}
 
-                    actionMade = true;
+	public boolean moveUp(Grid grid) {
+		boolean actionMade = false;
 
-                    grid.removeTile(tile);
-                    grid.removeTile(sideTile);
-                    grid.addTile(new Tile(tile.getPosX(), y, -1));
+		for (int x = 0; x < grid.getGridSize(); x++) {
+			for (int y = 1; y < grid.getGridSize(); y++) {
+				if (!actionMade) {
+					actionMade = moveTiles(grid, x, y, TilePosition.TOP);
+				} else {
+					moveTiles(grid, x, y, TilePosition.TOP);
+				}
+			}
+		}
+		return actionMade;
+	}
 
-                    if (!sideTile.isTaken()) {
-                        grid.addTile(new Tile(tile.getPosX() + 1, y, tile.getValue()));
-                    } else if (TileUtil.canBeMerged(tile, sideTile)) {
-                        grid.addTile(new Tile(tile.getPosX() + 1, y, tile.getValue() * 2));
-                        break;
-                    }
+	public boolean moveDown(Grid grid) {
+		boolean actionMade = false;
 
-                    tile = grid.getSideTile(tile, TilePosition.RIGHT);
-                    sideTile = grid.getSideTile(tile, TilePosition.RIGHT);
-                }
-            }
-        }
-        return actionMade;
-    }
-
-    public boolean moveUp(Grid grid) {
-        boolean actionMade = false;
-
-        for (int x = 0; x < grid.getGridSize(); x++) {
-            for (int y = 1; y < grid.getGridSize(); y++) {
-
-                Tile tile = grid.getTileAt(x, y);
-                Tile sideTile = grid.getSideTile(tile, TilePosition.TOP);
-
-                while (TileUtil.canBeMoved(tile, sideTile, TilePosition.TOP, grid.getGridSize()) && !sideTile.isTaken() ||
-                        TileUtil.canBeMoved(tile, sideTile, TilePosition.TOP, grid.getGridSize()) && TileUtil.canBeMerged(tile, sideTile)) {
-
-                    actionMade = true;
-
-                    grid.removeTile(tile);
-                    grid.removeTile(sideTile);
-                    grid.addTile(new Tile(x, tile.getPosY(), -1));
-
-                    if (!sideTile.isTaken()) {
-                        grid.addTile(new Tile(x, tile.getPosY() - 1, tile.getValue()));
-                    } else if (TileUtil.canBeMerged(tile, sideTile)) {
-                        grid.addTile(new Tile(x, tile.getPosY() - 1, tile.getValue() * 2));
-                        break;
-                    }
-
-                    tile = grid.getSideTile(tile, TilePosition.TOP);
-                    sideTile = grid.getSideTile(tile, TilePosition.TOP);
-                }
-            }
-        }
-        return actionMade;
-    }
-
-    public boolean moveDown(Grid grid) {
-        boolean actionMade = false;
-
-        for (int x = 0; x < grid.getGridSize(); x++) {
-            for (int y = grid.getGridSize() - 2; y >= 0; y--) {
-
-                Tile tile = grid.getTileAt(x, y);
-                Tile sideTile = grid.getSideTile(tile, TilePosition.BOTTOM);
-
-                while (TileUtil.canBeMoved(tile, sideTile, TilePosition.BOTTOM, grid.getGridSize()) && !sideTile.isTaken() ||
-                        TileUtil.canBeMoved(tile, sideTile, TilePosition.BOTTOM, grid.getGridSize()) && TileUtil.canBeMerged(tile, sideTile)) {
-
-                    actionMade = true;
-
-                    grid.removeTile(tile);
-                    grid.removeTile(sideTile);
-                    grid.addTile(new Tile(x, tile.getPosY(), -1));
-
-                    if (!sideTile.isTaken()) {
-                        grid.addTile(new Tile(x, tile.getPosY() + 1, tile.getValue()));
-                    } else if (TileUtil.canBeMerged(tile, sideTile)) {
-                        grid.addTile(new Tile(x, tile.getPosY() + 1, tile.getValue() * 2));
-                        break;
-                    }
-
-                    tile = grid.getSideTile(tile, TilePosition.BOTTOM);
-                    sideTile = grid.getSideTile(tile, TilePosition.BOTTOM);
-                }
-            }
-        }
-        return actionMade;
-    }
+		for (int x = 0; x < grid.getGridSize(); x++) {
+			for (int y = grid.getGridSize() - 2; y >= 0; y--) {
+				if (!actionMade) {
+					actionMade = moveTiles(grid, x, y, TilePosition.BOTTOM);
+				} else {
+					moveTiles(grid, x, y, TilePosition.BOTTOM);
+				}
+			}
+		}
+		return actionMade;
+	}
 
 }
