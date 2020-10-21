@@ -10,7 +10,20 @@ import javax.swing.*;
  * This class is responsible for rendering game objects in windows application.
  */
 public class WindowsRenderingService {
+	
+	private static WindowsRenderingService single_instance = null;
 
+	private WindowsRenderingService() {
+		System.out.println("WindowsRenderingService initialized.");
+	}
+	
+	public static WindowsRenderingService getInstance() {
+		if (single_instance == null) {
+			single_instance = new WindowsRenderingService();
+		}
+		return single_instance;
+	}
+	
     public void renderGrid(GameFrame gameFrame) {
 
         GridUtil.rearrangeGrid(gameFrame.getGrid());
@@ -26,7 +39,7 @@ public class WindowsRenderingService {
     public void showGameOver() {
         JOptionPane.showMessageDialog(null, "Too bad, you have lost the game!" +
                 "Play again and beat it next time!" +
-                "\nYour result is " + GameStateController.result);
-    }
+				"\nYour result is " + GameStateController.result);
+	}
 
 }

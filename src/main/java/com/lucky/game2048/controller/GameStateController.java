@@ -30,7 +30,7 @@ public class GameStateController {
     }
 
     public static void checkForGameOverWindows(GameFrame gameFrame) {
-        WindowsRenderingService windowsRenderingService = new WindowsRenderingService();
+        WindowsRenderingService windowsRenderingService = WindowsRenderingService.getInstance();
 
         calculateResult(gameFrame.getGrid());
 

@@ -32,7 +32,7 @@ public class GameController {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                final WindowsRenderingService windowsRenderingService = new WindowsRenderingService();
+                final WindowsRenderingService windowsRenderingService = WindowsRenderingService.getInstance();
                 final InputService inputService = new InputService();
 
                 windowsRenderingService.renderGrid(gameFrame);

@@ -3,7 +3,6 @@ package com.lucky.game2048.controller;
 import com.lucky.game2048.model.Grid;
 import com.lucky.game2048.model.Tile;
 import com.lucky.game2048.model.TilePosition;
-import com.lucky.game2048.util.GridUtil;
 import com.lucky.game2048.util.TileUtil;
 
 /**
