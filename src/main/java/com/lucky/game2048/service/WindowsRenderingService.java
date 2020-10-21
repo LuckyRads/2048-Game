@@ -9,37 +9,41 @@ import javax.swing.*;
 /**
  * This class is responsible for rendering game objects in windows application.
  */
-public class WindowsRenderingService {
-	
+public class WindowsRenderingService implements RenderingService {
+
 	private static WindowsRenderingService single_instance = null;
 
-	private WindowsRenderingService() {
-		System.out.println("WindowsRenderingService initialized.");
+	private GameFrame gameFrame = null;
+
+	private WindowsRenderingService(GameFrame gameFrame) {
+		this.gameFrame = gameFrame;
 	}
-	
-	public static WindowsRenderingService getInstance() {
+
+	public static WindowsRenderingService getInstance(GameFrame gameFrame) {
 		if (single_instance == null) {
-			single_instance = new WindowsRenderingService();
+			single_instance = new WindowsRenderingService(gameFrame);
 		}
 		return single_instance;
 	}
-	
-    public void renderGrid(GameFrame gameFrame) {
 
-        GridUtil.rearrangeGrid(gameFrame.getGrid());
+	@Override
+	public void renderGrid() {
 
-        gameFrame.revalidate();
-        gameFrame.repaint();
-    }
+		GridUtil.rearrangeGrid(gameFrame.getGrid());
 
-    public void showGameWon() {
-        JOptionPane.showMessageDialog(null, "Congratulations! You have won the game!");
-    }
+		gameFrame.revalidate();
+		gameFrame.repaint();
+	}
 
-    public void showGameOver() {
-        JOptionPane.showMessageDialog(null, "Too bad, you have lost the game!" +
-                "Play again and beat it next time!" +
-				"\nYour result is " + GameStateController.result);
+	@Override
+	public void showGameWon() {
+		JOptionPane.showMessageDialog(null, "Congratulations! You have won the game!");
+	}
+
+	@Override
+	public void showGameOver() {
+		JOptionPane.showMessageDialog(null, "Too bad, you have lost the game!" + "Play again and beat it next time!"
+				+ "\nYour result is " + GameStateController.result);
 	}
 
 }

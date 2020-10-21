@@ -16,46 +16,46 @@ import java.io.IOException;
  */
 public class GameController {
 
-    public void runGame(Grid grid) throws IOException {
-        ConsoleRenderingService consoleRenderingService = new ConsoleRenderingService();
-        InputService inputService = new InputService();
+	public void runGame(Grid grid) throws IOException {
+		ConsoleRenderingService consoleRenderingService = ConsoleRenderingService.getInstance(grid);
+		InputService inputService = new InputService();
 
-        consoleRenderingService.renderGrid(grid);
-        while (true) {
-            inputService.processInput(System.in.read(), grid);
-            consoleRenderingService.renderGrid(grid);
-            GameStateController.checkForGameOverConsole(grid);
-        }
-    }
+		consoleRenderingService.renderGrid();
+		while (true) {
+			inputService.processInput(System.in.read(), grid);
+			consoleRenderingService.renderGrid();
+			GameStateController.checkForGameOverConsole(grid);
+		}
+	}
 
-    public void runGame(final GameFrame gameFrame) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                final WindowsRenderingService windowsRenderingService = WindowsRenderingService.getInstance();
-                final InputService inputService = new InputService();
+	public void runGame(final GameFrame gameFrame) {
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				final WindowsRenderingService windowsRenderingService = WindowsRenderingService.getInstance(gameFrame);
+				final InputService inputService = new InputService();
 
-                windowsRenderingService.renderGrid(gameFrame);
-                gameFrame.addKeyListener(new KeyListener() {
-                    @Override
-                    public void keyPressed(KeyEvent e) {
-                        inputService.processInput((int) e.getKeyChar(), gameFrame.getGrid());
-                        windowsRenderingService.renderGrid(gameFrame);
-                        GameStateController.checkForGameOverWindows(gameFrame);
-                    }
+				windowsRenderingService.renderGrid();
+				gameFrame.addKeyListener(new KeyListener() {
+					@Override
+					public void keyPressed(KeyEvent e) {
+						inputService.processInput((int) e.getKeyChar(), gameFrame.getGrid());
+						windowsRenderingService.renderGrid();
+						GameStateController.checkForGameOverWindows(gameFrame);
+					}
 
-                    @Override
-                    public void keyTyped(KeyEvent e) {
+					@Override
+					public void keyTyped(KeyEvent e) {
 
-                    }
+					}
 
-                    @Override
-                    public void keyReleased(KeyEvent e) {
+					@Override
+					public void keyReleased(KeyEvent e) {
 
-                    }
-                });
-            }
-        });
-    }
+					}
+				});
+			}
+		});
+	}
 
 }
