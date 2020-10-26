@@ -51,6 +51,11 @@ public class Grid extends JPanel {
 		this.remove(tile);
 	}
 
+	public void replaceTile(Tile tileToReplace, Tile replacementTile) {
+		removeTile(tileToReplace);
+		addTile(replacementTile);
+	}
+
 	private void generateGrid() {
 		for (int y = 0; y < this.gridSize; y++) {
 			for (int x = 0; x < this.gridSize; x++) {
@@ -66,8 +71,7 @@ public class Grid extends JPanel {
 
 		while (true) {
 			if (!getTileAt(tilePosX, tilePosY).isTaken()) {
-				removeTile(getTileAt(tilePosX, tilePosY));
-				addTile(new Tile(tilePosX, tilePosY, tileValue));
+				replaceTile(getTileAt(tilePosX, tilePosY), new Tile(tilePosX, tilePosY, tileValue));
 				return;
 			}
 			tilePosX = NumberUtil.generateRandomNumber(0, this.gridSize);
