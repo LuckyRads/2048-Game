@@ -2,6 +2,7 @@ package com.lucky.game2048.controller;
 
 import com.lucky.game2048.model.*;
 import com.lucky.game2048.service.ConsoleRenderingService;
+import com.lucky.game2048.service.RenderingService;
 import com.lucky.game2048.service.WindowsRenderingService;
 import com.lucky.game2048.util.TileUtil;
 
@@ -16,7 +17,7 @@ public class GameStateController {
 	public static int result = 0;
 
 	public static void checkForGameOverConsole(Grid grid) {
-		ConsoleRenderingService consoleRenderingService = ConsoleRenderingService.getInstance(grid);
+		RenderingService consoleRenderingService = ConsoleRenderingService.getInstance(grid);
 
 		calculateResult(grid);
 
@@ -30,7 +31,7 @@ public class GameStateController {
 	}
 
 	public static void checkForGameOverWindows(GameFrame gameFrame) {
-		WindowsRenderingService windowsRenderingService = WindowsRenderingService.getInstance(gameFrame);
+		RenderingService windowsRenderingService = WindowsRenderingService.getInstance(gameFrame);
 
 		calculateResult(gameFrame.getGrid());
 

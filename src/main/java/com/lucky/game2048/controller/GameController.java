@@ -4,6 +4,7 @@ import com.lucky.game2048.model.GameFrame;
 import com.lucky.game2048.model.Grid;
 import com.lucky.game2048.service.ConsoleRenderingService;
 import com.lucky.game2048.service.InputService;
+import com.lucky.game2048.service.RenderingService;
 import com.lucky.game2048.service.WindowsRenderingService;
 
 import javax.swing.*;
@@ -17,13 +18,13 @@ import java.io.IOException;
 public class GameController {
 
 	public void runGame(Grid grid) throws IOException {
-		ConsoleRenderingService consoleRenderingService = ConsoleRenderingService.getInstance(grid);
+		RenderingService renderingService = ConsoleRenderingService.getInstance(grid);
 		InputService inputService = new InputService();
 
-		consoleRenderingService.renderGrid();
+		renderingService.renderGrid();
 		while (true) {
 			inputService.processInput(System.in.read(), grid);
-			consoleRenderingService.renderGrid();
+			renderingService.renderGrid();
 			GameStateController.checkForGameOverConsole(grid);
 		}
 	}
@@ -32,7 +33,7 @@ public class GameController {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				final WindowsRenderingService windowsRenderingService = WindowsRenderingService.getInstance(gameFrame);
+				final RenderingService windowsRenderingService = WindowsRenderingService.getInstance(gameFrame);
 				final InputService inputService = new InputService();
 
 				windowsRenderingService.renderGrid();
